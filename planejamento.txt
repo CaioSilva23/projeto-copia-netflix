@@ -1,0 +1,20 @@
+- Homepage
+- fazer login e criar conta (usuário e autenticação)
+    - email
+    - username
+    - senha
+    - filmes já vistos
+    editar perfil
+
+- filmes
+    - thumb
+    - titulo
+    - descricao
+    - categoria
+    - quantidade views
+    - data da cricacao
+    - episodios
+        - videos (link)
+        - titulos
+
+- barra pesquisa
