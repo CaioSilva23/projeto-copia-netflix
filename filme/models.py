@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 
-# Create your models here.asdad
+# Create your models heradsadas
 
 LISTA_CATEGORIAS = (
     ("ANALISES", "Análises"),
