@@ -1,7 +1,6 @@
-from django.shortcuts import render
 from .models import Filme
 from django.views.generic import TemplateView, ListView, DetailView
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 
@@ -21,12 +20,12 @@ class Homepage(TemplateView):
 
 
 # FUNCAO EXIBE UMA LISTA DE VIEW
-class Homefilmes(ListView):
+class Homefilmes(LoginRequiredMixin,ListView):
     template_name = "homefilmes.html"
     model = Filme  # objet_list -> lista de item
 
 
-class Detalhesfilmes(DetailView):
+class Detalhesfilmes(LoginRequiredMixin,DetailView):
     template_name = "detalhesfilme.html"
     model = Filme  # object - 1 filme
 
@@ -34,6 +33,9 @@ class Detalhesfilmes(DetailView):
         filme = self.get_object()
         filme.visualizacao += 1
         filme.save()
+        # FILMES JÁ VISTOS PELO USUÁRIO
+        usuario = request.user
+        usuario.filmes_vistos.add(filme)
         return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
@@ -41,16 +43,9 @@ class Detalhesfilmes(DetailView):
         filmes_relacionados = self.model.objects.filter(categoria=self.get_object().categoria)[0:5]
         context['filmes_relacionados'] = filmes_relacionados
         return context
-    #
-    # def get_context_data(self, **kwargs):
-    #     context = super(Detalhesfilmes, self).get_context_data(**kwargs)
-    #     # filtrar tabela de filmes, cuja categoria = categoria do filme da pagina
-    #     filmes_relacionados = Filme.objects.filter(categoria=self.get_object().categoria)
-    #     context=["filmes_relacionados"] = filmes_relacionados
-    #     return context
 
 
-class PesquisaFilme(ListView):
+class PesquisaFilme(LoginRequiredMixin,ListView):
     template_name = "pesquisa.html"
     model = Filme  # objet_list -> lista de item
 
@@ -61,3 +56,4 @@ class PesquisaFilme(ListView):
             return object_list
         else:
             return None
+
