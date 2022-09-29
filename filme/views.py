@@ -2,6 +2,7 @@ from .models import Filme
 from django.views.generic import TemplateView, ListView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+
 # Create your views here.
 
 
@@ -20,12 +21,12 @@ class Homepage(TemplateView):
 
 
 # FUNCAO EXIBE UMA LISTA DE VIEW
-class Homefilmes(LoginRequiredMixin,ListView):
+class Homefilmes(LoginRequiredMixin, ListView):
     template_name = "homefilmes.html"
     model = Filme  # objet_list -> lista de item
 
 
-class Detalhesfilmes(LoginRequiredMixin,DetailView):
+class Detalhesfilmes(LoginRequiredMixin, DetailView):
     template_name = "detalhesfilme.html"
     model = Filme  # object - 1 filme
 
@@ -45,7 +46,7 @@ class Detalhesfilmes(LoginRequiredMixin,DetailView):
         return context
 
 
-class PesquisaFilme(LoginRequiredMixin,ListView):
+class PesquisaFilme(LoginRequiredMixin, ListView):
     template_name = "pesquisa.html"
     model = Filme  # objet_list -> lista de item
 
@@ -56,4 +57,3 @@ class PesquisaFilme(LoginRequiredMixin,ListView):
             return object_list
         else:
             return None
-
